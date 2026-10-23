@@ -2,17 +2,17 @@ import cv2
 import numpy as np
 
 img = cv2.imread('Bismarck.jpg', cv2.IMREAD_GRAYSCALE)
-blur_img = cv2.GaussianBlur(img,(9,9),0)
+edges = cv2.Canny(img,100,200)
 
 fast = cv2.FastFeatureDetector_create()
 fast.setNonmaxSuppression(0)
-kp = fast.detect(blur_img, None)
+kp = fast.detect(edges, None)
 kp_img = cv2.drawKeypoints(img, kp, None, color=(255,0,0))
 
 orb = cv2.ORB_create()
 kp_orb = orb.detect(img, None)
-kp_orb, des = orb.compute(blur_img, kp_orb)
-orb_img = cv2.drawKeypoints(kp_img, kp, None, color=(0,255,0), flags=0)
+kp_orb, des = orb.compute(edges, kp_orb)
+orb_img = cv2.drawKeypoints(kp_img, kp_orb, None, color=(0,255,0), flags=0)
 
 cv2.namedWindow("Image")
 while True:
