@@ -6,12 +6,12 @@ blur_img = cv2.GaussianBlur(img,(9,9),0)
 
 fast = cv2.FastFeatureDetector_create()
 fast.setNonmaxSuppression(0)
-kp = fast.detect(img, None)
+kp = fast.detect(blur_img, None)
 kp_img = cv2.drawKeypoints(img, kp, None, color=(255,0,0))
 
 orb = cv2.ORB_create()
 kp_orb = orb.detect(img, None)
-kp_orb, des = orb.compute(img, kp_orb)
+kp_orb, des = orb.compute(blur_img, kp_orb)
 orb_img = cv2.drawKeypoints(kp_img, kp, None, color=(0,255,0), flags=0)
 
 cv2.namedWindow("Image")
